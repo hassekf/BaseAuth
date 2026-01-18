@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e912eeecfffc016edd611e750a251efa",
+    "content-hash": "f14e8039f643dbda760d0cf25fb6e504",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -189,6 +189,39 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "charleshassse/dau",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/charleshasse/dau",
+                "reference": "d70a8e2554318e13c1067b1551a31b06504c55a0"
+            },
+            "require": {
+                "livewire/livewire": "^4.0",
+                "php": "^8.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "CharlesHasse\\Dau\\DauServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CharlesHasse\\Dau\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "DAU - Dynamic Auth UI for Laravel",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "dasprid/enum",
@@ -2252,6 +2285,79 @@
                 "source": "https://github.com/livewire/flux/tree/v2.10.2"
             },
             "time": "2025-12-19T02:11:45+00:00"
+        },
+        {
+            "name": "livewire/flux-pro",
+            "version": "2.10.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.fluxui.dev/download/a0a0798f-1cf8-4999-8f57-8688c21f2d59/flux-pro-2.10.2.zip",
+                "reference": "9440435e467c4bb775efbc2c510ec7dea61e17d7",
+                "shasum": "177bf08ae75c628c96a1a3a4fd1e788b1b798e1d"
+            },
+            "require": {
+                "illuminate/console": "^10.0|^11.0|^12.0",
+                "illuminate/support": "^10.0|^11.0|^12.0",
+                "illuminate/view": "^10.0|^11.0|^12.0",
+                "laravel/prompts": "^0.1.24|^0.2|^0.3",
+                "livewire/flux": "2.10.2|dev-main",
+                "livewire/livewire": "^3.7.3|^4.0",
+                "php": "^8.1",
+                "symfony/console": "^6.0|^7.0"
+            },
+            "require-dev": {
+                "livewire/volt": "*",
+                "orchestra/testbench": "^10.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Flux": "FluxPro\\FluxPro"
+                    },
+                    "providers": [
+                        "FluxPro\\FluxProServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "FluxPro\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "App\\": "workbench/app/"
+                }
+            },
+            "scripts": {
+                "serve": [
+                    "Composer\\Config::disableProcessTimeout",
+                    "@php vendor/bin/testbench workbench:build --ansi",
+                    "@php vendor/bin/testbench serve --port 3000 --ansi"
+                ]
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Caleb Porzio",
+                    "email": "calebporzio@gmail.com"
+                }
+            ],
+            "description": "The pro version of Flux, the official UI component library for Livewire.",
+            "keywords": [
+                "components",
+                "flux",
+                "laravel",
+                "livewire",
+                "ui"
+            ],
+            "time": "2025-12-19T02:22:27+00:00"
         },
         {
             "name": "livewire/livewire",
@@ -9766,7 +9872,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "charleshassse/dau": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
