@@ -10,7 +10,7 @@ return [
 
     'features' => [
         'register' => true,
-        'login_two_steps' => true,
+        'login_two_steps' => false,
         'password_strength' => true,
         'password_confirm' => true,
         'password_reveal' => true,
