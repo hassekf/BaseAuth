@@ -17,7 +17,13 @@
     $hasLabel = filled($label);
     $hasReveal = $revealEnabled && $type === 'password';
     $hasEmailAutocomplete = $autocompleteEmail && $type === 'email';
+    $theme = config('dau.layout.theme', 'default');
     $baseClasses = 'w-full rounded-md border border-zinc-300 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-white dark:focus:ring-white/10';
+    if ($theme === 'side_slider') {
+        $baseClasses = 'w-full rounded-md border border-zinc-300 bg-white px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 dark:border-white/10 dark:bg-[#2f2a3c] dark:text-white dark:placeholder:text-white/40 dark:focus:border-white/30 dark:focus:ring-white/10';
+    } elseif ($theme === 'side_full') {
+        $baseClasses = 'w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/15 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-blue-400 dark:focus:ring-blue-400/20';
+    }
     $paddingClasses = in_array($labelPosition, ['inside', 'floating'], true) ? 'pt-6 pb-2' : 'py-2';
     $inputClasses = trim($baseClasses.' '.$paddingClasses.($hasReveal ? ' pr-10' : ''));
     $resolvedPlaceholder = $placeholder ?? ($labelPosition === 'hidden' ? $label : null);
@@ -132,7 +138,7 @@ ALPINE, $hasEmailAutocomplete ? 'true' : 'false');
 
 <div class="space-y-1" @if ($hasInteractive) x-data="{!! $alpineData !!}" x-init="init($refs.input)" @endif>
     @if ($hasLabel && $labelPosition === 'above')
-        <label for="{{ $inputId }}" class="text-sm font-medium text-zinc-800 dark:text-zinc-200">
+        <label for="{{ $inputId }}" class="text-sm opacity-70 flex font-medium mb-2 text-zinc-800 dark:text-zinc-200">
             {{ $label }}
         </label>
     @endif

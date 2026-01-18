@@ -3,13 +3,14 @@
 return [
 
     'layout' => [
-        'theme' => 'default',
+        'theme' => 'side_full', // default / side_slider / side_full
         'labels_position' => 'inset', // above | inside | inset (overlaps border) | floating (goes from inside to above on focus) | hidden
         'mode_toggle' => true
     ],
 
     'features' => [
         'register' => true,
+        'login_two_steps' => true,
         'password_strength' => true,
         'password_confirm' => true,
         'password_reveal' => true,
@@ -20,7 +21,7 @@ return [
 
     'social' => [
         'google' => true,
-        'apple' => false,
+        'apple' => true,
     ],
 
     'captcha' => [

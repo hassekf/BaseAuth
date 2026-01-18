@@ -37,6 +37,10 @@
                 </div>
             </div>
         </div>
+        @include('dau::partials.tuner')
         @fluxScripts
+        <flux:toast.group position="top-center" >
+            <flux:toast />
+        </flux:toast.group>
     </body>
 </html>

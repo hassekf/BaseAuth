@@ -34,7 +34,16 @@
         <flux:separator text="or" class="my-4" />
         @endif
 
-        <form wire:submit.prevent="login" class="flex flex-col gap-6">
+        @php
+            $twoSteps = config('dau.features.login_two_steps');
+        @endphp
+
+        <form
+            wire:submit.prevent="login"
+            class="flex flex-col gap-6"
+            x-data="{ twoSteps: {{ $twoSteps ? 'true' : 'false' }}, showPassword: {{ $twoSteps ? 'false' : 'true' }} }"
+            x-init="if (!twoSteps) { showPassword = true } else if ($refs.email && $refs.email.value.trim().length) { showPassword = true }"
+        >
 
             <!-- Email Address -->
             <x-dau::input
@@ -42,6 +51,9 @@
                 :label="__('Email address')"
                 type="email"
                 wire:model.lazy="email"
+                x-ref="email"
+                x-on:input="if (!twoSteps) return; showPassword = $event.target.value.trim().length > 0"
+                x-on:blur="if (!twoSteps) return; showPassword = $event.target.value.trim().length > 0"
                 autocomplete="email"
                 required
                 autofocus
@@ -49,39 +61,49 @@
             ></x-dau::input>
 
             <!-- Password -->
-            <x-dau::input
-                name="password"
-                :label="__('Password')"
-                type="password"
-                wire:model.lazy="password"
-                autocomplete="current-password"
-                required
-            ></x-dau::input>
+            <div
+                x-show="showPassword"
+                x-cloak
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 -translate-y-2"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 -translate-y-2"
+                class="flex flex-col gap-6"
+            >
+                <x-dau::input
+                    name="password"
+                    :label="__('Password')"
+                    type="password"
+                    wire:model.lazy="password"
+                    autocomplete="current-password"
+                    required
+                ></x-dau::input>
 
-            @if (Route::has('password.request'))
-                <a class="-mt-4 text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200" href="{{ route('password.request') }}" wire:navigate>
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+                @if (Route::has('password.request'))
+                    <a class="-mt-4 text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200" href="{{ route('password.request') }}" wire:navigate>
+                        {{ __('Forgot your password?') }}
+                    </a>
+                @endif
 
-            <!-- Remember Me -->
-            @if (config('dau.features.login_remember_me'))
-            <label class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
-                <input
-                    type="checkbox"
-                    wire:model="remember"
-                    class="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:focus:ring-white/20"
-                />
-                <span>{{ __('Remember me') }}</span>
-            </label>
-            @endif
+                <!-- Remember Me -->
+                @if (config('dau.features.login_remember_me'))
+                <label class="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
+                    <input
+                        type="checkbox"
+                        wire:model="remember"
+                        class="h-4 w-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:focus:ring-white/20"
+                    />
+                    <span>{{ __('Remember me') }}</span>
+                </label>
+                @endif
 
-
-
-            <div class="flex items-center justify-end">
-                <button type="submit" class="w-full rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-900/20 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 dark:focus:ring-white/20" data-test="login-button">
-                    {{ __('Log in') }}
-                </button>
+                <div class="flex items-center justify-end">
+                    <button type="submit" class="w-full rounded-md bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-900/20 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100 dark:focus:ring-white/20" data-test="login-button">
+                        {{ __('Log in') }}
+                    </button>
+                </div>
             </div>
         </form>
 
